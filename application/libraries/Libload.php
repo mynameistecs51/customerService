@@ -16,6 +16,13 @@ class Libload
 		$this->ci->load->view('template/Footer',$data);
 	}
 
+	public function DateNow()
+	{
+		date_default_timezone_set('Asia/Bangkok');
+		$now = new DateTime(null, new DateTimeZone('Asia/Bangkok'));
+		return $now->format('Y-m-d H:i:s');
+	}
+
 	public  function getMonth() {
 		return  array(
 			'01' => 'มกราคม',

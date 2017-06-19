@@ -36,7 +36,7 @@
 						<td class="text-center">
 							<button type="button" class="btn btn-warning btn-sm btn_edit" data-num="<?php echo $rowCustomer['id']; ?>"><i class="fa fa-edit"></i> EDIT</button>
 							<button type="button" class="btn btn-danger  btn-sm btn_delete" data-num="<?php echo $rowCustomer['id']; ?>"><i class="fa fa-trash"></i> DELETE</button>
-							<button type="button" class="btn btn-danger  btn-sm btn_view" data-num="<?php echo $rowCustomer['id']; ?>""><i class="fa fa-list"></i> VIEW</button>
+							<button type="button" class="btn btn-success  btn-sm btn_view" data-num="<?php echo $rowCustomer['id']; ?>""><i class="fa fa-list"></i> VIEW</button>
 						</td>
 					</tr>
 				<?php endforeach ?>
@@ -59,46 +59,32 @@
 				responsive: true,
 			});
 
-		funadd();
-		fnedit();
-		fndelete();
-		fnview();
-		<?php echo $addFalse; ?>
+		fnAdd();
+		fnEdit();
+		fnDelete();
 
 	} );
 
-	function addFalse() {
-
-		var url = '<?php echo $FormCustomerAdd;?>';
-		modal_form('<?php echo $saveAdd; ?>','.:: เพิ่มข้อมูลพนักงาน ::.');
-		$('#myModal ').modal('show');
-		$('.modal-body').load(url);
-	}
-
-	function fnview() {
-		$('.btn_view').click(function() {
-			var url = '<?php echo $FormCustomerView;?>'+$(this).data('num');
-			modal_form('#','.:: ดูข้อมูลพนักงาน ::.');
-			$('#myModal ').modal('show');
-			$('.modal-body').load(url);
+	function fnAdd() {
+		$('#btn_addCustomer').click(function(){
+			window.location.replace('<?php echo $FormCustomerAdd; ?>');
 		});
 	}
 
-	function fnedit() {
+	function fnEdit() {
 		$('.btn_edit').click(function(){
-			var url = '<?php echo $FormCustomerEdit;?>'+$(this).data('num');
-			modal_form('<?php echo $saveEdit; ?>'+$(this).data('num'),'.:: แก้ไขข้อมูลพนักงาน ::.');
-			$('#myModal ').modal('show');
-			$('.modal-body').load(url);
+			window.location.replace('<?php echo $FormCustomerEdit; ?>'+$(this).data('num'));
 		});
 	}
 
-	function fndelete() {
+	function fnDelete() {
 		$('.btn_delete').click(function() {
 			var confm = confirm("ยืนยันการลบข้อมูล !!");
 			if(confm == true){
 				$.ajax({
-					url: '<?php echo $urldelete;?>'+$(this).data('num'),
+					url: '<?php echo $urldelete;?>',
+					type: 'POST',
+					data: {'id': $(this).data('num')}
 				})
 				.done(function() {
 					location.reload();
@@ -111,39 +97,5 @@
 				return  false;
 			}
 		});
-	}
-
-	function funadd(url) {
-		$('#btn_addCustomer').click(function(){
-			var url = '<?php echo $FormCustomerAdd;?>';
-			modal_form('<?php echo $saveAdd; ?>','.:: เพิ่มข้อมูลพนักงาน ::.');
-			$('#myModal ').modal('show');
-			$('.modal-body').load(url);
-		});
-	}
-
-	function modal_form(action,title) {
-		var html ='<form action="'+action+'"  role="form" data-toggle="validator" id="form" method="post" >';
-		html +='<!-- Modal -->';
-		html +='<div class="modal modal-wide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
-		html +='<div class="modal-dialog modal-lg" >';
-		html +='<div class="modal-content">';
-		html += '<div class="modal-header alert-info">';
-		html += '<h5 class="modal-title">'+ title +'</h5>';
-		html += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-		html += '	<span aria-hidden="true">&times;</span>';
-		html += '</button>';
-		html += '</div>';
-		html +='<div class="modal-body">';
-		html +='</div>';
-		html +='<div class="modal-footer" style="text-align:center; background:#F6CECE;">';
-		html +='<button type="submit" id="save" class="btn btn-modal btn-primary"><span class="   glyphicon glyphicon-floppy-saved"> บันทึก</span></button>';
-		html +='<button type="reset" class="btn btn-modal btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-remove"> ยกเลิก</span></button>';
-		html +='</div>';
-		html +='</div><!-- /.modal-content -->';
-		html +='</div><!-- /.modal-dialog -->';
-		html +='</div><!-- /.modal -->';
-		html +='</form>';
-		$('.show_modal').html(html);
 	}
 </script>
