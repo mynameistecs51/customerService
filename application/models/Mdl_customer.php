@@ -30,34 +30,6 @@ class Mdl_customer extends CI_Model {
 		return $data->result_array();
 	}
 
-	public function viewCustomerID($id)
-	{
-			$sql =  "
-		SELECT
-		id,
-		CONCAT(
-		(CASE gender
-		WHEN 'M' THEN 'นาย'
-		WHEN 'F' THEN 'นางสาว'
-		END),' ',first_name,' ',last_name)
-		AS customer_name,
-		email,
-		phone,
-		fax,
-		country_code,
-		CONCAT(CASE enabled
-		WHEN 0 THEN 'ปิดใช้งาน'
-		WHEN 1 THEN 'เปิดใช้งาน'
-		END) AS status,
-		CONCAT(DATE_FORMAT(created_at,'%d/%m/'),DATE_FORMAT(created_at,'%Y')+543)AS create_date,
-		CONCAT(DATE_FORMAT(created_at,'%H:%i'))AS time_created
-		FROM xcustomer
-		WHERE id = '".$id."'
-		";
-		$data = $this->db->query($sql);
-		return $data->result_array();
-	}
-
 	public function getCustomerID($id)
 	{
 		$sql =  "

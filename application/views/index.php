@@ -62,6 +62,7 @@
 		fnAdd();
 		fnEdit();
 		fnDelete();
+		fnView();
 
 	} );
 
@@ -74,6 +75,12 @@
 	function fnEdit() {
 		$('.btn_edit').click(function(){
 			window.location.replace('<?php echo $FormCustomerEdit; ?>'+$(this).data('num'));
+		});
+	}
+
+	function fnView() {
+		$('.btn_view').click(function(){
+			window.location.replace('<?php echo $FormCustomerView; ?>'+$(this).data('num'));
 		});
 	}
 

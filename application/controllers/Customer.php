@@ -24,21 +24,25 @@ class Customer extends CI_Controller {
 
 	public function FormCustomerView($id)
 	{
+		$this->data['title'] = 'ข้อมูลพนักงาน';
+		$this->data['page'] = 'customer/FormCustomerView';
 		$this->data['dataCustomer'] = array();
-		$getCustomerID = $this->mdl_customer->viewCustomerID($id);
+		$getCustomerID = $this->mdl_customer->getCustomerID($id);
 		foreach ($getCustomerID as $rowCustomer) {
 			$this->data['dataCustomer'] = array(
-				// 'id' => $rowCustomer['id'],
-				'name' => $rowCustomer['customer_name'],
+				'id' => $rowCustomer['id'],
+				'gender' => $rowCustomer['gender'],
+				'first_name' => $rowCustomer['first_name'],
+				'last_name' => $rowCustomer['last_name'],
 				'email' => $rowCustomer['email'],
 				'phone' => $rowCustomer['phone'],
 				'fax' => $rowCustomer['fax'],
 				'country_code' => $rowCustomer['country_code'],
-				'enabled' => $rowCustomer['status']
+				'enabled' => $rowCustomer['enabled']
 				);
 		}
 		// print_r($this->data);
-		$this->load->view('customer/FormCustomerView', $this->data);
+		$this->libload->loadView($this->data['page'],$this->data);
 	}
 
 	public function FormCustomerAdd()
